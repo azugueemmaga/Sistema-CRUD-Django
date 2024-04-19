@@ -1,0 +1,15 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+    <h1>Editar Estudiante</h1>
+
+    <form action="/editar_est/" method="post">
+        {% csrf_token %}
+        <input type="text" name="cedula" id="cedula" value="{{estudiante.cedula}}" readonly>
+        <input type="text" name="nombre" id="nombre" value="{{estudiante.nombre}}">
+        <input type="text" name="apellido" id="apellido" value="{{estudiante.apellido}}">
+        <button class="btn btn-success" type="submit">Guardar</button>
+    </form>
+
+{% endblock %}
