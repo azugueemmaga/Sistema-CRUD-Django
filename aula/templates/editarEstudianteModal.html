@@ -1,0 +1,37 @@
+
+{% block content %}
+
+<div class="modal fade" id="editarEstudianteModal" tabindex="-1" aria-labelledby="editarEstudianteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editarEstudianteModalLabel">Editar Estudiante:</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="/editar_est/" method="post" id="editarEstudianteForm">
+            {% csrf_token %}
+            <input type="hidden" id="cedula" name="cedula">
+            <div class="mb-3">
+              <label for="cedula" class="form-label">Cedula:</label>
+              <input type="text" id="cedula" name="cedula" class="form-control" value="{{estudiante.cedula}}" readonly>
+            </div>
+            <div class="mb-3">
+              <label for="nombreInput" class="form-label">Nombre:</label>
+              <input type="text" id="nombre" name="nombre" class="form-control" value="{{estudiante.nombre}}">
+            </div>
+            <div class="mb-3">
+              <label for="apellidoInput" class="form-label">Apellido:</label>
+              <input type="text" id="apellidoInput" name="apellido" class="form-control" value="{{estudiante.apellido}}">
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  {% endblock %}

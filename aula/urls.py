@@ -9,7 +9,7 @@ urlpatterns = [
     path('añadir_est/', views.añadir_est ),
     path('listado/eliminar/<cedula>', views.eliminar),
     path('listado/', views.listado),
-    path('listado/editar_pag/<cedula>', views.editar_pag),
+    path('listado/editarEstudianteModal/<cedula>', views.editarEstudianteModal),
     path('editar_est/', views.editar_est),
     
 ]

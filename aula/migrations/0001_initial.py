@@ -17,6 +17,8 @@ class Migration(migrations.Migration):
                 ('cedula', models.CharField(max_length=8, primary_key=True, serialize=False)),
                 ('nombre', models.CharField(max_length=20)),
                 ('apellido', models.CharField(max_length=20)),
+                ('anio', models.CharField(max_length=20)),
+                ('seccion', models.CharField(max_length=20)),
             ],
         ),
     ]

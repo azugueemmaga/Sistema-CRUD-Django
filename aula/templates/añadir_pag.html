@@ -2,14 +2,71 @@
 
 {% block content %}
 
-    <h1>Añadir Estudiante</h1>
+<div class="container mt-6 border border-warning rounded p-2">
+  <div class="row align-items-center">
+    <div class="col-2 ms-auto">  <img src="../static/estudiante.png" alt="Logo" class="img-fluid" width="130" height="130">
+    </div>
+ 
+    <div class="col-9">
+      <h1 class="text-center mb-3 col-8">Añadir Estudiante</h1>
+    </div>
+  </div>
+  <br>
+  <form action="/añadir_est/" method="post" class="row">
+    {% csrf_token %}
+    <div class="col-md-6 mb-3">
+      <label for="cedula" class="form-label">Cédula:</label>
+      <input type="text" name="cedula" id="cedula" class="form-control" placeholder="Ingrese la cédula del estudiante" required>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label for="nombre" class="form-label">Nombre:</label>
+      <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Ingrese el nombre del estudiante">
+    </div>
+    <div class="col-md-6 mb-3">
+      <label for="apellido" class="form-label">Apellido:</label>
+      <input type="text" name="apellido" id="apellido" class="form-control" placeholder="Ingrese el apellido del estudiante">
+    </div>
+    <div class="col-md-3 mb-3">
+      <label for="anio" class="form-label">Año:</label>
+      <select class="form-select" name="anio" id="año" required>
+        <option value="">Seleccionar año</option>
+        <option value="1">1er Año</option>
+        <option value="2">2do Año</option>
+        <option value="3">3er Año</option>
+        <option value="4">4to Año</option>
+        <option value="5">5to Año</option>
+      </select>
+    </div>
+    <div class="col-md-3 mb-3">
+      <label for="seccion" class="form-label">Sección:</label>
+      <select class="form-select" name="seccion" id="seccion" required>
+        <option value="">Seleccionar sección</option>
+        <option value="a">A</option>
+        <option value="b">B</option>
+        <option value="c">C</option>
+      </select>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label for="nota1" class="form-label">Nota 1:</label>
+      <input type="text" name="nota1" id="nota1" class="form-control" placeholder="Ingrese la nota #1">
+    </div>
+    <div class="col-md-4 mb-3">
+      <label for="nota2" class="form-label">Nota 2:</label>
+      <input type="text" name="nota2" id="nota2" class="form-control" placeholder="Ingrese la nota #2">
+    </div>
+    <div class="col-md-4 mb-3">
+      <label for="nota3" class="form-label">Nota 3:</label>
+      <input type="text" name="nota3" id="nota3" class="form-control" placeholder="Ingrese la nota #3">
+      <br>
+    </div>
+ 
+    <div class="col-12 text-center">
+      <button type="submit" class="btn btn-success">Guardar</button>
+    </div>
+  </form>
+  <br>
+</div>
 
-    <form action="/añadir_est/" method="post">
-        {% csrf_token %}
-        <input type="text" name="cedula" id="cedula" placeholder="Cedula" required>
-        <input type="text" name="nombre" id="nombre" placeholder="Nombre">
-        <input type="text" name="apellido" id="apellido" placeholder="Apellido">
-        <button class="btn btn-success" type="submit">Guardar</button>
-    </form>
+
 
 {% endblock %}

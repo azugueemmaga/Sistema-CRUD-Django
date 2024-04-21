@@ -3,31 +3,195 @@
 {% block title %}Listado {% endblock %}
 {% block navbar_title %} /home/ {% endblock %}
 {% block content %}
-    <h1>Listado de Estudiantes</h1>
+<div class="container mt-6 border border-warning rounded p-3">
+  <h1 class="text-center mb-4">Listado de Estudiantes</h1>
+
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Apellido</th>
+        <th scope="col">Cedula</th>
+        <th scope="col">Año</th>
+        <th scope="col">Sección</th>
+        <th scope="col">Nota 1</th>
+        <th scope="col">Nota 2</th>
+        <th scope="col">Nota 3</th>
+        <th scope="col">Promedio</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for e in estudiante %}
+        <tr>
+          <th scope="row"></th>
+          <td>{{ e.nombre }}</td>
+          <td>{{ e.apellido }}</td>
+          <td>{{ e.cedula }}</td>
+          <td>{{ e.anio }}</td>
+          <td>{{ e.seccion }}</td>
+          <td>{{ e.nota1 }}</td>
+          <td>{{ e.nota2 }}</td>
+          <td>{{ e.nota3 }}</td>
+          <td>{{ e.promedio }}</td>
+          <td>
+            <div class="button-container vertical-align: middle;">
+              <button type="button" class="btn btn-success edit-student-btn" data-bs-toggle="modal" data-bs-target="#editarEstudianteModal" data-cedula="{{ e.cedula }}" data-nombre="{{ e.nombre }}" data-apellido="{{ e.apellido }}" data-anio="{{ e.anio }}" data-seccion="{{ e.seccion }}" data-nota1="{{ e.nota1}}" data-nota2="{{ e.nota2}}" data-nota3="{{ e.nota3}}">
+                Editar
+              </button>
+              <button type="button" class="btn btn-danger delete-student-btn" data-bs-toggle="modal" data-bs-target="#deleteStudentModal" data-cedula="{{ e.cedula }}" data-nombre="{{ e.nombre }}" data-apellido="{{ e.apellido }}">Eliminar</button>
+            </div>
+          </td>
+        </tr>
+
+        
+      {% endfor %}
+    </tbody>
+  </table>
+
+  </div>
+  
     
-    <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Apellido</th>
-            <th scope="col">Cedula</th>
-          </tr>
-        </thead>
-        <tbody>
-            {% for e in estudiante %}
-          <tr>
-            <th scope="row"></th>
-            <td>{{ e.nombre }}</td>
-            <td>{{ e.apellido }}</td>
-            <td>{{ e.cedula }}</td>
-            <td><a href="editar_pag/{{e.cedula}}" class="btn btn-success">Editar</a>
-            <a href="eliminar/{{e.cedula}}" class="btn btn-danger">Eliminar</a></td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+      <div class="modal fade" id="editarEstudianteModal" tabindex="-1" aria-labelledby="editarEstudianteModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            </div>
+        </div>
+      </div>
+      <div class="modal fade" id="deleteStudentModal" tabindex="-1" aria-labelledby="deleteStudentModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="deleteStudentModalLabel">Eliminar Estudiante</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>¿Estás seguro de que quieres eliminar al estudiante <b>{{ e.nombre }} {{ e.apellido }}</b>?</p>
+              <a href="eliminar/{{ e.cedula }}" class="btn btn-danger">Eliminar</a>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script>
+        const deleteButtons = document.querySelectorAll('.delete-student-btn');
+
+        deleteButtons.forEach(button => {
+          button.addEventListener('click', (event) => {
+            const cedula = event.target.dataset.cedula;
+            const nombre = event.target.dataset.nombre;
+            const apellido = event.target.dataset.apellido;
+            const modalBody = document.getElementById('deleteStudentModal').querySelector('.modal-body');
+            modalBody.innerHTML = `
+              <p>¿Estás seguro de que quieres eliminar al estudiante <b>${nombre} ${apellido}</b>?</p>
+              <a href="eliminar/${cedula}" class="btn btn-danger">Eliminar</a>
+            `;
+          });
+        });
+
+        const editButtons = document.querySelectorAll('.edit-student-btn');
+      
+        editButtons.forEach(button => {
+            button.addEventListener('click', (event) => {
+              const cedula = event.target.dataset.cedula;
+              const nombre = event.target.dataset.nombre;
+              const apellido = event.target.dataset.apellido;
+              const anio = event.target.dataset.anio;
+              const seccion = event.target.dataset.seccion;
+              const nota1 = event.target.dataset.nota1;
+              const nota2 = event.target.dataset.nota2;
+              const nota3 = event.target.dataset.nota3;
+              console.log(anio, seccion)
+              
+            // Replace with your logic to fetch student data using cedula
+            // const studentData = { nombre: "Example Name", apellido: "Example Last Name" }; // Replace with actual data fetching
+      
+            // Populate modal content with student data
+            const modalBody = document.querySelector('.modal-content');
+            modalBody.innerHTML = `
+            <div class="modal-header d-flex justify-content-center">
+            <div class="col-2 align-self-center">  <img src="../static/estudiante.png" alt="Logo" class="img-fluid">
+            </div>
+            <div class="col-9">  <h3 class="modal-title text-center mb-1" id="editarEstudianteModalLabel">Editar datos del Estudiante ${nombre} ${apellido}:</h3>
+            </div>
+            <button type="button" class="btn-close col-9" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <div class="modal-body">
+            <form action="/editar_est/" method="post" id="editarEstudianteForm">
+              {% csrf_token %}
+              <input type="hidden" id="cedula" name="cedula" value="${cedula}">
+
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label for="cedula" class="form-label">Cedula:</label>
+                    <input type="text" id="cedula" name="cedula" class="form-control" value="${cedula}" readonly>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="nombreInput" class="form-label">Nombre:</label>
+                    <input type="text" id="nombreInput" name="nombre" class="form-control" value="${nombre}">
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label for="apellidoInput" class="form-label">Apellido:</label>
+                    <input type="text" id="apellidoInput" name="apellido" class="form-control" value="${apellido}" selected>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="anio" class="form-label">Año:</label>
+                    <select class="form-select" name="anio" id="anio" required>
+                      <option value="">${anio}</option>
+                      <option value="1" {% if anio == "1" %}selected{% endif %}>1er Año</option>
+                      <option value="2" {% if anio == "2" %}selected{% endif %}>2do Año</option>
+                      <option value="3" {% if anio == "3" %}selected{% endif %}>3er Año</option>
+                      <option value="4" {% if anio == "4" %}selected{% endif %}>4to Año</option>
+                      <option value="5" {% if anio == "5" %}selected{% endif %}>5to Año</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label for="seccion" class="form-label">Sección:</label>
+                    <select class="form-select" name="seccion" id="seccion" required>
+                      <option value="">${seccion}</option>
+                      <option value="a" {% if seccion == "a" %}selected{% endif %}>A</option>
+                      <option value="b" {% if seccion == "b" %}selected{% endif %}>B</option>
+                      <option value="c" {% if seccion == "c" %}selected{% endif %}>C</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="nota1" class="form-label">Nota 1:</label>
+                    <input type="text" name="nota1" id="nota1" class="form-control" placeholder="Ingrese la nota #1" value="${nota1}">
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label for="nota2" class="form-label">Nota 2:</label>
+                    <input type="text" name="nota2" id="nota2" class="form-control" placeholder="Ingrese la nota #2" value="${nota2}">
+                  </div>
+                  <div class="col-md-6">
+                    <label for="nota3" class="form-label">Nota 3:</label>
+                    <input type="text" name="nota3" id="nota3" class="form-control" placeholder="Ingrese la nota #3" value="${nota3}">
+                  </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Guardar</button>
+              </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              </div>
+            `;
+          });
+        });
+      </script>
 
 
-
+      {% include 'editarEstudianteModal.html' %}
 {% endblock %}
